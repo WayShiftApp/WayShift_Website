@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="img/icon.png">
+<title>WayShift</title>
+<meta name="description" content="WayShift: short audio history stories that play over your own music as you walk. Live in London, Bristol and Bath.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/*
+  Tokens
+  Colour: WayShift greens from the app's asset catalogue on a pale park-path ground.
+  Type: Bricolage Grotesque for headlines, Instrument Sans for everything else.
+  Layout: four sections, one job each. No decorative lines; the app screenshots carry the visuals.
+*/
+:root {
+  --bg: #F3F7F2;
+  --surface: #FFFFFF;
+  --ink: #0D1F14;
+  --muted: #4E6356;
+  --line: #D5E2D6;
+  --green: #045022;
+  --leaf: #1E8449;
+  --on-green: #FFFFFF;
+  --band: #045022;
+  --on-band: #FFFFFF;
+  --shadow: 0 30px 60px -30px rgba(4, 80, 34, .35);
+  --font-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --font-body: "Instrument Sans", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --wm-light: block; --wm-dark: none;
+  --s-1: 15px; --s0: 17px; --s1: clamp(18px, 2vw, 21px); --s2: 26px; --s3: clamp(34px, 4.6vw, 56px); --s4: clamp(46px, 7vw, 92px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #09130D; --surface: #112018; --ink: #E4EFE7; --muted: #9DB5A5; --line: #1F3628;
+    --green: #4CC27A; --leaf: #3DDC84; --on-green: #062312; --band: #0E3520; --on-band: #E4EFE7;
+    --shadow: 0 30px 60px -30px rgba(0,0,0,.7);
+    --wm-light: none; --wm-dark: block; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #09130D; --surface: #112018; --ink: #E4EFE7; --muted: #9DB5A5; --line: #1F3628;
+  --green: #4CC27A; --leaf: #3DDC84; --on-green: #062312; --band: #0E3520; --on-band: #E4EFE7;
+  --shadow: 0 30px 60px -30px rgba(0,0,0,.7);
+  --wm-light: none; --wm-dark: block; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: var(--s0); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.04; letter-spacing: -0.025em; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--leaf); outline-offset: 3px; border-radius: 6px; }
+.lede { font-size: var(--s1); color: var(--muted); max-width: 30em; }
+.band { padding-block: clamp(64px, 9vw, 112px); }
+.head { display: grid; gap: 16px; max-width: 680px; margin-bottom: 48px; }
+.head h2 { font-size: var(--s3); font-weight: 700; }
+section { scroll-margin-top: 80px; }
+
+/* Nav */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.wm { height: 34px; width: auto; }
+.wm-l { display: var(--wm-light); } .wm-d { display: var(--wm-dark); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a:not(.btn) { font-size: 15px; font-weight: 500; color: var(--muted); text-decoration: none; }
+.nav-links a:not(.btn):hover { color: var(--ink); }
+@media (max-width: 760px) { .nav-links a:not(.btn) { display: none; } }
+.btn { display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer; font: 600 15px/1 var(--font-body); text-decoration: none; padding: 15px 24px; border-radius: 999px; background: var(--green); color: var(--on-green); transition: background-color .2s ease; }
+.btn:hover { background: var(--leaf); }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn.ghost:hover { background: transparent; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.btn.small { padding: 10px 16px; font-size: 14px; }
+
+/* Hero: the pitch, the playable demo, the beta button */
+.hero { padding-block: clamp(40px, 6vw, 80px) clamp(64px, 9vw, 112px); }
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero h1 { font-size: var(--s4); font-weight: 800; margin-bottom: 24px; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 32px; }
+.hero-note { font-size: var(--s-1); color: var(--muted); }
+.demo { display: grid; justify-items: center; gap: 14px; min-width: 0; }
+.phone { position: relative; width: min(300px, 100%); aspect-ratio: 1284 / 2778; max-width: 100%; border-radius: 46px; padding: 10px; background: #0b0f0c; box-shadow: var(--shadow); }
+.phone video { width: 100%; height: 100%; object-fit: cover; border-radius: 36px; display: block; background: #dfe9df; }
+.phone::after { content: ""; position: absolute; top: 20px; left: 50%; translate: -50% 0; width: 30%; height: 24px; border-radius: 20px; background: #0b0f0c; pointer-events: none; }
+.play { position: absolute; left: 50%; bottom: 24px; translate: -50% 0; box-shadow: var(--shadow); white-space: nowrap; }
+.phone.playing .play { display: none; }
+.demo-note { font-size: var(--s-1); color: var(--muted); text-align: center; max-width: 22em; }
+@media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; } }
+
+/* How it works: a real sequence, so numbered. Subgrid keeps the three columns on shared rows. */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto auto 1fr; column-gap: clamp(20px, 3vw, 36px); }
+.step { display: grid; grid-template-rows: subgrid; grid-row: span 4; row-gap: 14px; justify-items: start; min-width: 0; }
+.num { font: 800 22px/1 var(--font-display); color: var(--green); width: 48px; height: 48px; border-radius: 50%; border: 3px solid var(--green); display: grid; place-items: center; }
+.step h3 { font-size: var(--s2); }
+.step p { color: var(--muted); max-width: 22em; }
+.shot { width: 100%; max-width: 240px; aspect-ratio: 600/1000; object-fit: cover; border-radius: 26px; border: 6px solid #0b0f0c; box-shadow: var(--shadow); margin-top: 10px; }
+@media (max-width: 800px) {
+  .steps { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 56px; }
+  .step { grid-template-rows: none; grid-row: auto; }
+}
+
+/* Stories: real hooks from the route files */
+.stories { background: var(--band); color: var(--on-band); }
+.stories .lede { color: inherit; opacity: .85; }
+.story-list { list-style: none; padding: 0; margin: 0; }
+.story-list li { display: grid; grid-template-columns: 1fr auto; gap: 6px 32px; align-items: baseline; padding-block: 24px; border-top: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); }
+.story-list li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); }
+.story-list q { font-family: var(--font-display); font-weight: 700; font-size: clamp(23px, 3.2vw, 38px); line-height: 1.12; letter-spacing: -0.02em; quotes: none; text-wrap: balance; }
+.story-list span { display: inline-flex; align-items: center; gap: 8px; font-size: var(--s-1); opacity: .8; white-space: nowrap; }
+.story-list span svg { flex: none; }
+@media (max-width: 640px) { .story-list li { grid-template-columns: 1fr; } }
+
+/* Where we're live */
+.live-grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.live-grid .head { margin-bottom: 32px; }
+.cities { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
+.cities li { display: grid; gap: 2px; }
+.cities strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -0.02em; line-height: 1.1; }
+.cities span { color: var(--muted); }
+.live-grid .shot { width: 260px; max-width: 100%; margin: 0; aspect-ratio: 600 / 1304; }
+@media (max-width: 800px) { .live-grid { grid-template-columns: 1fr; justify-items: center; } .live-grid > div { justify-self: stretch; } }
+.partner { margin-top: clamp(48px, 7vw, 72px); padding: clamp(24px, 3vw, 36px); border-radius: 24px; background: var(--surface); border: 1px solid var(--line); display: grid; grid-template-columns: 1fr auto; gap: 16px 32px; align-items: center; }
+.partner h3 { font-size: var(--s2); }
+.partner p { color: var(--muted); margin-top: 6px; max-width: 34em; }
+@media (max-width: 700px) { .partner { grid-template-columns: 1fr; justify-items: start; } }
+
+/* Join */
+.cta { background: var(--surface); border-top: 1px solid var(--line); }
+.cta-box { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: center; }
+.cta-box img { width: 92px; height: 92px; border-radius: 22px; box-shadow: var(--shadow); }
+.cta-box h2 { font-size: clamp(30px, 4vw, 46px); }
+.cta-box p { color: var(--muted); margin-top: 8px; }
+.copy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.addr { font-size: var(--s-1); font-weight: 500; padding: 13px 16px; border-radius: 999px; border: 1.5px solid var(--line); overflow-wrap: anywhere; text-decoration: none; }
+.addr:hover { border-color: var(--muted); }
+@media (max-width: 860px) { .cta-box { grid-template-columns: 1fr; } }
+footer { padding-block: 28px; font-size: 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" aria-label="WayShift home">
+      <img class="wm wm-l" src="img/wordmark.png" alt="WayShift">
+      <img class="wm wm-d" src="img/wordmark-dark.png" alt="WayShift">
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#stories">Stories</a>
+      <a href="#live">Where we're live</a>
+      <a class="btn small" href="#join">Join the beta</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Keep your music on. History plays as you walk.</h1>
+        <p class="lede">WayShift runs in the background. Reach a landmark and your Spotify dips while a short story plays, then comes straight back. Podcasts pause and pick up where you left off.</p>
+        <div class="cta-row">
+          <a class="btn" href="#join">Join the beta</a>
+          <span class="hero-note">Free on iPhone.</span>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="phone" id="phone">
+          <video id="demoVid" src="demo.mp4" poster="img/story.jpg" autoplay muted loop playsinline preload="metadata" aria-label="WayShift demo: a walk round Wandsworth Park"></video>
+          <button class="btn play" id="playBtn" type="button"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z" fill="currentColor"/></svg>Play with sound</button>
+        </div>
+        <p class="demo-note">A real walk round Wandsworth Park, sped up.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2>How it works</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h3>Walk with your own music</h3>
+          <p>Headphones in, phone in your pocket. Play whatever you like.</p>
+          <img class="shot" src="img/start.jpg" alt="A walk just started: the route's stops on the map and the first stop up next" loading="lazy" style="object-position:bottom">
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h3>Hear 25-second stories at landmarks</h3>
+          <p>Reach a spot and a short story tells you where to look and what happened there.</p>
+          <img class="shot" src="img/spotter.jpg" alt="A story playing, telling you where to look" loading="lazy" style="object-position:bottom">
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h3>Unlock a 48-hour VIP pass</h3>
+          <p>By the end of your walk you've earned a pass for an independent café on the route. Swipe to redeem at the counter.</p>
+          <img class="shot" src="img/redeemed.jpg" alt="A verified VIP pass for a partner café" loading="lazy" style="object-position:center">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band stories" id="stories">
+    <div class="wrap">
+      <div class="head">
+        <h2>Ever wondered what you're walking past?</h2>
+        <p class="lede">A few of the stories waiting on the walks.</p>
+      </div>
+      <ul class="story-list">
+        <li><q>The bridge a Prime Minister built out of spite</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Putney, London</span></li>
+        <li><q>Why that iron pole isn't a lamp post</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Wandsworth, London</span></li>
+        <li><q>The day Brunel got stuck in a basket 250 feet above the gorge</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Clifton, Bristol</span></li>
+        <li><q>The police chase that turned Banksy to stencils</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Harbourside, Bristol</span></li>
+        <li><q>The Romans who posted curses into a hot spring</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Roman Baths, Bath</span></li>
+        <li><q>One of only four bridges in the world lined with shops</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Pulteney Bridge, Bath</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="live">
+    <div class="wrap">
+      <div class="live-grid">
+        <div>
+          <div class="head">
+            <h2>Live in London, Bristol and Bath.</h2>
+            <p class="lede">Walks in all three cities are built and ready to try in the beta.</p>
+          </div>
+          <ul class="cities">
+            <li><strong>London</strong><span>From Wandsworth Park and Putney to Soho and St James's.</span></li>
+            <li><strong>Bristol</strong><span>Harbourside legends, Brunel and street art.</span></li>
+            <li><strong>Bath</strong><span>Roman springs, Georgian crescents and Jane Austen.</span></li>
+          </ul>
+        </div>
+        <img class="shot" src="img/london-all.jpg" alt="The WayShift Explore map of London, with groups of walks across the city" loading="lazy">
+      </div>
+      <div class="partner">
+        <div>
+          <h3>Run an independent café?</h3>
+          <p>Put your café at the end of a WayShift walk, and walkers arrive with a pass to spend.</p>
+        </div>
+        <a class="btn ghost" href="mailto:feedback@wayshiftapp.com?subject=Caf%C3%A9%20partner%20enquiry">Partner with us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta band" id="join">
+    <div class="wrap cta-box">
+      <img src="img/icon.png" alt="WayShift app icon">
+      <div>
+        <h2>Walk it first.</h2>
+        <p>WayShift is in beta on iPhone. Email us and we'll send you an invite.</p>
+      </div>
+      <div class="copy-row">
+        <a class="addr" id="addr" href="mailto:feedback@wayshiftapp.com?subject=WayShift%20beta%20invite">feedback@wayshiftapp.com</a>
+        <button class="btn" id="copyBtn" type="button">Copy email</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 WayShift</div></footer>
+
+<script>
+(function () {
+  /* Demo: plays muted on a loop; "Play with sound" restarts it with sound and controls */
+  var v = document.getElementById('demoVid'), phone = document.getElementById('phone');
+  document.getElementById('playBtn').addEventListener('click', function () {
+    v.muted = false; v.loop = false; v.controls = true; v.currentTime = 0;
+    phone.classList.add('playing');
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  });
+  v.addEventListener('ended', function () {
+    v.muted = true; v.loop = true; v.controls = false; phone.classList.remove('playing');
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  });
+
+  /* Copy email */
+  var cb = document.getElementById('copyBtn'), addr = document.getElementById('addr');
+  cb.addEventListener('click', function () {
+    var done = function () { cb.textContent = 'Copied'; setTimeout(function () { cb.textContent = 'Copy email'; }, 1800); };
+    try { navigator.clipboard.writeText(addr.textContent).then(done, sel); } catch (e) { sel(); }
+  });
+  function sel() {
+    var r = document.createRange(); r.selectNodeContents(addr);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    cb.textContent = 'Press ⌘C';
+  }
+})();
+</script>
+</body>
+</html>
