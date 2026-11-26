@@ -106,13 +106,19 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* Stories: real hooks from the route files */
 .stories { background: var(--band); color: var(--on-band); }
 .stories .lede { color: inherit; opacity: .85; }
-.story-list { list-style: none; padding: 0; margin: 0; }
-.story-list li { display: grid; grid-template-columns: 1fr auto; gap: 6px 32px; align-items: baseline; padding-block: 24px; border-top: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); }
-.story-list li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--on-band) 22%, transparent); }
-.story-list q { font-family: var(--font-display); font-weight: 700; font-size: clamp(23px, 3.2vw, 38px); line-height: 1.12; letter-spacing: -0.02em; quotes: none; text-wrap: balance; }
-.story-list span { display: inline-flex; align-items: center; gap: 8px; font-size: var(--s-1); opacity: .8; white-space: nowrap; }
-.story-list span svg { flex: none; }
-@media (max-width: 640px) { .story-list li { grid-template-columns: 1fr; } }
+/* Story cards: the hand-drawn illustrations from the Instagram pack, one per story */
+.story-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 28px); }
+.card { display: grid; grid-template-rows: auto 1fr; border-radius: 22px; overflow: hidden; background: color-mix(in srgb, var(--on-band) 8%, transparent); border: 1px solid color-mix(in srgb, var(--on-band) 16%, transparent); }
+.card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #F6F4EE; transition: transform .5s ease; }
+.card:hover img { transform: scale(1.03); }
+.card > div { display: grid; align-content: space-between; gap: 14px; padding: 20px 22px 22px; position: relative; }
+.card q { font-family: var(--font-display); font-weight: 700; font-size: clamp(21px, 2vw, 25px); line-height: 1.15; letter-spacing: -0.015em; quotes: none; text-wrap: balance; }
+.card span { display: inline-flex; align-items: center; gap: 8px; font-size: var(--s-1); opacity: .8; }
+.card span svg { flex: none; }
+.more { margin-top: 32px; max-width: 46em; opacity: .85; }
+@media (max-width: 900px) { .story-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .story-grid { grid-template-columns: 1fr; } .card img { aspect-ratio: 16 / 10; } }
+@media (prefers-reduced-motion: reduce) { .card img { transition: none; } .card:hover img { transform: none; } }
 
 /* Where we're live */
 .live-grid { display: grid; grid-template-columns: 1fr auto; gap: clamp(32px, 6vw, 88px); align-items: center; }
@@ -214,14 +220,15 @@ footer { padding-block: 28px; font-size: 14px; color: var(--muted); }
         <h2>Ever wondered what you're walking past?</h2>
         <p class="lede">A few of the stories waiting on the walks.</p>
       </div>
-      <ul class="story-list">
-        <li><q>The bridge a Prime Minister built out of spite</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Putney, London</span></li>
-        <li><q>Why that iron pole isn't a lamp post</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Wandsworth, London</span></li>
-        <li><q>The day Brunel got stuck in a basket 250 feet above the gorge</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Clifton, Bristol</span></li>
-        <li><q>The police chase that turned Banksy to stencils</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Harbourside, Bristol</span></li>
-        <li><q>The Romans who posted curses into a hot spring</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Roman Baths, Bath</span></li>
-        <li><q>One of only four bridges in the world lined with shops</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Pulteney Bridge, Bath</span></li>
+      <ul class="story-grid">
+        <li class="card"><img src="img/art/bridge.svg" alt="Illustration: a rower on the Thames by an old bridge at sunset" width="1080" height="1080" loading="lazy"><div><q>The bridge a Prime Minister built out of spite</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Putney, London</span></div></li>
+        <li class="card"><img src="img/art/stinkpipe.svg" alt="Illustration: a walker with headphones beside a tall green iron pole in a park" width="1080" height="1080" loading="lazy" style="object-position:50% 70%"><div><q>Why that iron pole isn't a lamp post</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Wandsworth, London</span></div></li>
+        <li class="card"><img src="img/art/gorge.svg" alt="Illustration: a Victorian engineer below a suspension bridge across a gorge" width="1080" height="1080" loading="lazy"><div><q>The day Brunel got stuck in a basket 250 feet above the gorge</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Clifton, Bristol</span></div></li>
+        <li class="card"><img src="img/art/ford.svg" alt="Illustration: early settlers and a cow wading across the Thames at low tide" width="1080" height="1080" loading="lazy" style="object-position:50% 60%"><div><q>The winter a Viking army camped on the Thames</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Thames Path, Putney</span></div></li>
+        <li class="card"><img src="img/art/duel.svg" alt="Illustration: two Georgian duellists on a heath, both shots missing" width="1080" height="1080" loading="lazy" style="object-position:50% 62%"><div><q>The Prime Minister who fought a pistol duel on the heath</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Putney Heath, London</span></div></li>
+        <li class="card"><img src="img/art/crescent.svg" alt="Illustration: a Regency couple and a modern walker on the lawn of a curved Georgian crescent" width="1080" height="1080" loading="lazy" style="object-position:50% 60%"><div><q>Where Jane Austen set her most romantic reunion</q><span><svg width="12" height="15" viewBox="0 0 12 15" aria-hidden="true"><path d="M6 14s5-4.6 5-8.3A5 5 0 0 0 1 5.7C1 9.4 6 14 6 14z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="5.8" r="1.7" fill="currentColor"/></svg>Gravel Walk, Bath</span></div></li>
       </ul>
+      <p class="more">Also on the walks: the police chase that turned Banksy to stencils, the Romans who posted curses into a hot spring, and one of only four bridges in the world lined with shops.</p>
     </div>
   </section>
 

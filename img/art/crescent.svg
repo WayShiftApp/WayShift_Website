@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D6E6E8"/><stop offset="1" stop-color="#F6F4EE"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#D8C08A"/><stop offset="0.5" stop-color="#EBD7A6"/><stop offset="1" stop-color="#D8C08A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#sky)"/>
+  <g fill="#F6F4EE"><ellipse cx="220" cy="160" rx="110" ry="26"/><ellipse cx="280" cy="140" rx="60" ry="30"/><ellipse cx="820" cy="120" rx="90" ry="22"/></g>
+  <!-- the crescent: a curved terrace, seen from the lawn -->
+  <path d="M-40 260 C300 330 780 330 1120 260 L1120 640 C780 700 300 700 -40 640Z" fill="url(#stone)"/>
+  <path d="M-40 250 C300 320 780 320 1120 250" stroke="#C4AA72" stroke-width="22" fill="none"/>
+  <path d="M-40 380 C300 446 780 446 1120 380" stroke="#C4AA72" stroke-width="8" fill="none"/>
+  <!-- giant ionic columns, following the curve -->
+  <g fill="#F2E6C6">
+    <rect x="20" y="300" width="20" height="330"/><rect x="100" y="318" width="20" height="330"/><rect x="180" y="334" width="20" height="330"/><rect x="260" y="346" width="20" height="330"/>
+    <rect x="340" y="355" width="20" height="330"/><rect x="420" y="361" width="20" height="330"/><rect x="500" y="364" width="20" height="330"/><rect x="580" y="364" width="20" height="330"/>
+    <rect x="660" y="361" width="20" height="330"/><rect x="740" y="355" width="20" height="330"/><rect x="820" y="346" width="20" height="330"/><rect x="900" y="334" width="20" height="330"/>
+    <rect x="980" y="318" width="20" height="330"/><rect x="1060" y="300" width="20" height="330"/>
+  </g>
+  <!-- windows -->
+  <g fill="#6E7F75">
+    <rect x="52" y="420" width="34" height="60"/><rect x="132" y="434" width="34" height="60"/><rect x="212" y="446" width="34" height="60"/><rect x="292" y="454" width="34" height="60"/>
+    <rect x="372" y="460" width="34" height="60"/><rect x="452" y="464" width="34" height="60"/><rect x="532" y="466" width="34" height="60"/><rect x="612" y="464" width="34" height="60"/>
+    <rect x="692" y="460" width="34" height="60"/><rect x="772" y="454" width="34" height="60"/><rect x="852" y="446" width="34" height="60"/><rect x="932" y="434" width="34" height="60"/><rect x="1012" y="420" width="34" height="60"/>
+    <rect x="52" y="530" width="34" height="74"/><rect x="132" y="544" width="34" height="74"/><rect x="212" y="556" width="34" height="74"/><rect x="292" y="564" width="34" height="74"/>
+    <rect x="372" y="570" width="34" height="74"/><rect x="452" y="574" width="34" height="74"/><rect x="532" y="576" width="34" height="74"/><rect x="612" y="574" width="34" height="74"/>
+    <rect x="692" y="570" width="34" height="74"/><rect x="772" y="564" width="34" height="74"/><rect x="852" y="556" width="34" height="74"/><rect x="932" y="544" width="34" height="74"/><rect x="1012" y="530" width="34" height="74"/>
+  </g>
+  <!-- ha-ha / railings -->
+  <path d="M-40 650 C300 712 780 712 1120 650" stroke="#12201A" stroke-width="5" fill="none"/>
+  <!-- the great lawn -->
+  <path d="M-40 650 C300 712 780 712 1120 650 V1080 H-40Z" fill="#8CC79A"/>
+  <path d="M-40 760 C300 800 780 800 1120 760 V1080 H-40Z" fill="#7DBB8C"/>
+  <!-- strolling Regency figures -->
+  <g transform="translate(330 840)">
+    <path d="M-30 150 C-40 60 -20 20 0 20 C20 20 40 60 30 150Z" fill="#F6F4EE"/>
+    <path d="M-30 150 C-40 60 -20 20 0 20 C20 20 40 60 30 150" stroke="#CDB683" stroke-width="3" fill="none"/>
+    <path d="M-20 26 H20 L18 46 H-18Z" fill="#C4623A"/>
+    <circle cx="0" cy="0" r="16" fill="#E2B08C"/>
+    <path d="M-30 -6 C-26 -44 26 -44 30 -6 C16 -16 -16 -16 -30 -6Z" fill="#F2A23A"/>
+    <path d="M24 40 L74 -30" stroke="#12201A" stroke-width="3"/>
+    <path d="M34 -40 C54 -70 114 -60 114 -20 Z" fill="#A9EBC4"/>
+  </g>
+  <g transform="translate(420 840)">
+    <path d="M-22 40 L-26 150 L-14 150 L-6 70 L6 70 L14 150 L26 150 L22 40Z" fill="#F6F4EE"/>
+    <path d="M-24 50 C-26 20 -10 10 0 10 C16 10 28 20 26 50 L28 110 L-28 110Z" fill="#2F5D8A"/>
+    <circle cx="0" cy="-8" r="15" fill="#D9A07E"/>
+    <rect x="-14" y="-62" width="28" height="44" fill="#12201A"/><rect x="-24" y="-22" width="48" height="6" fill="#12201A"/>
+  </g>
+  <!-- today's walker with headphones -->
+  <g transform="translate(760 860) scale(0.85)">
+    <path d="M-8 110 L-26 200 L-10 202 L10 124Z" fill="#12201A"/>
+    <path d="M14 110 L40 196 L56 190 L32 118Z" fill="#12201A"/>
+    <path d="M-28 30 C-30 6 -8 -4 12 -2 C34 0 44 16 42 40 L38 118 L-22 118Z" fill="#045022"/>
+    <circle cx="6" cy="-30" r="27" fill="#8E5B3E"/>
+    <path d="M-18 -40 C-16 -66 30 -66 30 -40 C20 -54 -6 -56 -18 -40Z" fill="#12201A"/>
+    <path d="M-22 -34 C-26 -78 40 -80 36 -34" stroke="#12201A" stroke-width="6" fill="none"/>
+    <rect x="-30" y="-42" width="13" height="23" rx="6" fill="#12201A"/>
+    <rect x="31" y="-42" width="12" height="22" rx="5" fill="#12201A"/>
+  </g>
+</svg>
